@@ -1,0 +1,14 @@
+{
+  "name": "task-service",
+  "version": "1.0.0",
+  "description": "Task service for the Todo application",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "redis": "^3.1.2",
+    "nodemon": "^2.0.15"
+  }
+}

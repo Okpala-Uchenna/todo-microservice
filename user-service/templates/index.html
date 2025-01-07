@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    h1 {
+      color: #333;
+    }
+    #task-form {
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      width: 70%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #5cb85c;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #4cae4c;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 10px;
+      background: #fff;
+      margin-bottom: 5px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>To-Do App</h1>
+
+  <form id="task-form">
+    <input type="text" id="task-input" placeholder="Enter a new task..." required>
+    <button type="submit">Add Task</button>
+  </form>
+
+  <h2>Task List</h2>
+  <ul id="task-list"></ul>
+
+  <script>
+    const taskForm = document.getElementById('task-form');
+    const taskInput = document.getElementById('task-input');
+    const taskList = document.getElementById('task-list');
+
+    // Fetch tasks from the backend and display them
+    async function fetchTasks() {
+      const response = await fetch('/tasks');
+      const data = await response.json();
+      taskList.innerHTML = '';
+      data.tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.textContent = task;
+        taskList.appendChild(li);
+      });
+    }
+
+    // Add a new task by sending a POST request to the backend
+    taskForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const task = taskInput.value;
+
+      if (task.trim()) {
+        await fetch('/tasks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ task }),
+        });
+        taskInput.value = '';
+        fetchTasks();
+      }
+    });
+
+    // Load tasks on page load
+    fetchTasks();
+  </script>
+</body>
+</html>
