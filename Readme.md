@@ -93,5 +93,5 @@ This project uses `docker-compose.yml` to manage multi-container Docker applicat
 1. Clone the repository:
 
 ```bash
-git clone <your-repository-url>
+git clone git@github.com:Okpala-Uchenna/todo-microservice.git
 cd <your-repository-name>
